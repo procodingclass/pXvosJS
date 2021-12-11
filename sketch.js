@@ -14,10 +14,11 @@ var mango1,mango2,mango3,mango4,mango5,mango6,mango7,mango8,mango9;
 var world,boy;
 
 
-var launcher;
+var sling;
 
 function preload(){
-	boy=loadImage("images/boy.png");
+	boy=loadImage("boy.png");
+  tree=loadImage("tree.png");
 }
 
 function setup() {
@@ -38,11 +39,10 @@ function setup() {
 	mango8 = new Mango(540,150,30);
 	mango9 = new Mango(510,130,30);
 
-	tree = new Tree(600,380);
 	ground = new Ground(width/2,460,width,20);
 
-  //create launcher with stone as bodyA
-  launcher = new Launcher(stone.body,{x:135,y:320});
+  //create sling with stone as bodyA
+  sling = new Sling(stone.body,{x:135,y:320});
 
   var mouseObject = Mouse.create(canvas.elt);
   let options = {
@@ -59,11 +59,11 @@ function draw() {
   background(230);
   Engine.update(engine);
   textSize(25);
-  text("Launch the stone when mouse is released!!",50 ,50);
+  text("Launch the stone when mouse is released!!",30 ,50);
+  text("Press space to catch the stone!!",30 ,100);
   image(boy ,100,240,200,300);
+  image(tree ,440,0,350,400);
   
-
-  tree.display();
   stone.display();
  
 
@@ -78,30 +78,24 @@ function draw() {
   
   stone.display();
  
-  launcher.display();
-
-
-  
+  sling.display();
 }
 
+function keyPressed(){
+  if(keyCode === 32){
+    Matter.Body.setPosition(stone.body,{x:135,y:320})
+    //wrie code to call attach() with 
+    //stone.body as parameter
+
+    
+  }
+}
 
 function mouseReleased()
 {
   setTimeout(() => {
-    launcher.fly();
+    sling.fly();
   }, 70);
 	
 }
 
-
-function keyPressed(){
-  //wrie code to call attach() with 
-  //stone.body as parameter
-  if(keyCode === 32){
-    
-    launcher.attach(stone.body);
-  }
-}
-
- 
-    
